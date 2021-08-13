@@ -38,8 +38,8 @@ Todo lo que envíes al chat proxy en el juego se intercepta del lado del cliente
 Este módulo utiliza retrasos aleatorios para simular un comportamiento similar al humano.
 
 ## Créditos
-Original de Pinkie Pie -> https://github.com/pinkipi
-Bifurcado de TeraProxy -> https://github.com/TeraProxy/Negotiator
+- Original de Pinkie Pie -> https://github.com/pinkipi
+- Bifurcado de TeraProxy -> https://github.com/TeraProxy/Negotiator
 
 ## Cambios
 <details>
