@@ -1,63 +1,62 @@
-##### :heavy_exclamation_mark: Status :heavy_exclamation_mark:
-Should work on all regions as long as the opcodes are mapped. Currently only works on TERA Toolbox.
+##### :heavy_exclamation_mark: Estado :heavy_exclamation_mark:
+Debería funcionar en todas las regiones siempre que se asignen los códigos de operación. Actualmente solo funciona en TERA Toolbox.
 
-##### :heavy_exclamation_mark: Installation :heavy_exclamation_mark:
-1) Download Negotiator: https://github.com/TeraProxy/Negotiator/archive/master.zip
-2) Extract the contents of the zip file into "\tera-proxy\mods\"
-3) Done! (the module will auto-update when a new version is released)
-  
-If you enjoy my work and wish to support future development, feel free to drop me a small donation: [![Donate](https://www.paypalobjects.com/webstatic/en_US/i/buttons/PP_logo_h_100x26.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=A3KBZUCSEQ5RJ)
+##### :heavy_exclamation_mark: Instalación :heavy_exclamation_mark:
+1) Descargar Negociador: https://github.com/Loliconera/Negotiator/archive/refs/heads/master.zip
+2) Extraiga el contenido del archivo zip en "\TeraToolbox\mods"
+3) ¡Hecho! (el módulo se actualizará automáticamente cuando se lance una nueva versión)
 
-# Negotiator
-A tera-proxy module that automatically accepts or declines Trade Broker negotiations.  
-This is a fork of Pinkie Pie's original auto-negotiate.  
+# Negociador
+Un módulo tera-proxy que acepta o rechaza automáticamente las negociaciones de Trade Broker.
+Esta es una bifurcación del original Pinkie Pie's auto-negotiate.
 
 ![Screenshot](https://i.imgur.com/uB74X4o.png)
 
-## Usage
-There are several options you can change in the config.json file:  
+## Como usar
+Hay varias opciones que puede cambiar en el archivo config.json:  
   
-* "**AUTO_ACCEPT_THRESHOLD**" - Automatically accepts offers for *equal or more than* the specified amount in % (0 to disable)
-** Example: 99 will accept offers for 99% (or more) of the asking price
-* "**AUTO_REJECT_THRESHOLD**" - Automatically declines offers for *less* than the specified amount in % (0 to disable)
-** Example: 75 will decline offers for less than 75% of the asking price
-* "**UNATTENDED_MANUAL_NEGOTIATE**" - Set to "true" to automatically accept negotiations after clicking the "Accept" link in chat (so be careful what you click!)
-* "**DELAY_ACTIONS**" - Set this to "false" to immediately handle negotiations instead of waiting for a bit to simulate human-like behavior
-* "**log**" - Set this to "true" to enable the logging of negotiations to your console
+* "**AUTO_ACCEPT_THRESHOLD**" - Acepta automáticamente ofertas por *igual o mayor que* la cantidad especificada en % (0 para deshabilitar)
+** Ejemplo: 99 aceptará ofertas por el 99% (o más) del precio de venta
+* "**AUTO_REJECT_THRESHOLD**" - Rechaza automáticamente ofertas por *menos* que la cantidad especificada en % (0 para deshabilitar)
+** Ejemplo: 75 rechazarán ofertas por menos del 75% del precio de venta
+* "**UNATTENDED_MANUAL_NEGOTIATE**" - Configure en "true" para aceptar automáticamente las negociaciones después de hacer clic en el enlace "Accept" en el chat (¡así que tenga cuidado con lo que hace clic!)
+* "**DELAY_ACTIONS**" - Establezca esto en "false" para manejar de inmediato las negociaciones en lugar de esperar un poco para simular un comportamiento similar al humano.
+* "**log**" - Establezca esto en "true" para habilitar el registro de negociaciones en su consola
   
-While in game, open a proxy chat session by typing "/proxy" or "/8" in chat and hitting the space bar.  
-This serves as the script's command interface.  
-The following commands are supported:  
+Mientras estás en el juego, abre una sesión de chat proxy escribiendo "/proxy" o "/8" en el chat y presionando la barra espaciadora. 
+Esto sirve como interfaz de comandos del script.  
+Se admiten los siguientes comandos:  
   
-* **nego accept [x]** - change the minimum percentage to accept a deal, e.g. "nego accept 100" [0 to disable]
-* **nego reject [x]** - change the maximum percentage to reject a deal, e.g. "nego reject 75" [0 to disable]
-* **nego unattended** - enable/disable automatically accepting deals after clicking the "Accept" link in chat
-* **nego delay** - switch between human-like behavior and immediate negotiation
-* **nego log** - enable/disable logging to console
+* **nego accept [x]** - cambiar el porcentaje mínimo para aceptar un trato, ej. "nego accept 100" [0 para inhabilitar]
+* **nego reject [x]** - cambiar el porcentaje máximo para rechazar un trato, ej. "nego reject 75" [0 para inhabilitar]
+* **nego unattended** - habilitar / deshabilitar la aceptación automática de ofertas después de hacer clic en el enlace "Accept" en el chat
+* **nego delay** - cambiar entre el comportamiento humano y la negociación inmediata
+* **nego log** - habilitar / deshabilitar el registro en la consola
 
-## Safety
-Whatever you send to the proxy chat in game is intercepted client-side. The chat is NOT sent to the server.  
-This module uses randomized delays to simulate human-like behavior.  
+## Seguridad
+Todo lo que envíes al chat proxy en el juego se intercepta del lado del cliente. El chat NO se envía al servidor.
+Este módulo utiliza retrasos aleatorios para simular un comportamiento similar al humano.
 
-## Credits
-Original by Pinkie Pie -> https://github.com/pinkipi
+## Créditos
+Original de Pinkie Pie -> https://github.com/pinkipi
+Bifurcado de TeraProxy -> https://github.com/TeraProxy/Negotiator
 
-## Changelog
+## Cambios
 <details>
 
 ### 1.1.0
-* [~] Now pulls strings directly from the game files (the module will ALWAYS be up-to-date!)
-* [-] Removed "strings" directory and files as they are not needed any longer
+* [~] Ahora extrae cadenas directamente de los archivos del juego (¡el módulo SIEMPRE estará actualizado!)
+* [-] Se eliminaron los archivos y el directorio de "cadenas", ya que ya no son necesarios
 ### 1.0.2
-* [+] Added notice on successful negotiation
+* [+] Aviso agregado sobre negociación exitosa
 ### 1.0.1
-* [*] Fixed a bug with changing accept and refuse threshold ingame
+* [*] Se corrigió un error al cambiar el umbral de aceptación y rechazo en el juego.
 ### 1.0.0
-* [*] BigInt compatibility
-* [+] Added auto-update support on Caali's proxy
-* [+] Added optional negotiation logging to console
-* [+] Added ingame commands
-* [+] Added display of item names and amount
-* [~] Moved settings to config file
+* [*] Compatibilidad BigInt
+* [+] Se agregó soporte de actualización automática en el proxy de Caali
+* [+] Se agregó un registro de negociación opcional a la consola.
+* [+] Comandos agregados dentro del juego
+* [+] Se agregó visualización de los nombres y la cantidad de los artículos.
+* [~] Configuración movida al archivo de configuración
 
 </details>

@@ -71,7 +71,7 @@ module.exports = function Negotiator(mod) {
 		}
 	})
 
-	mod.hook('S_REQUEST_CONTRACT', 1, event => {
+	mod.hook('S_REQUEST_CONTRACT', 2, event => {
 		if(currentDeal && (event.type == TYPE_NEGOTIATION_PENDING || event.type == TYPE_NEGOTIATION)) {
 			currentContract = event
 			setEndTimeout()
@@ -84,8 +84,8 @@ module.exports = function Negotiator(mod) {
 
 	mod.hook('S_REJECT_CONTRACT', 1, event => {
 		if(currentDeal && (event.type == TYPE_NEGOTIATION_PENDING || event.type == TYPE_NEGOTIATION)) {
-			mod.command.message(niceName + currentDeal.name + ' aborted negotiation')
-			if(mod.settings.log) console.log(now() + ' [Nego] ' + currentDeal.name + ' aborted negotiation')
+			mod.command.message(niceName + currentDeal.name + ' negociacion abortada')
+			if(mod.settings.log) console.log(now() + ' [Nego] ' + currentDeal.name + ' negociacion abortada')
 
 			// Fix listing becoming un-negotiable (server-side) if the other user aborts the initial dialog
 			if(event.type == TYPE_NEGOTIATION_PENDING)
@@ -115,13 +115,13 @@ module.exports = function Negotiator(mod) {
 
 				//if(msg.id === 'SMT_MEDIATE_DISCONNECT_CANCEL_OFFER_BY_ME' || msg.id === 'SMT_MEDIATE_TRADE_CANCEL_ME') return false
 				if(msg.id === 'SMT_MEDIATE_TRADE_CANCEL_OPPONENT') {
-					mod.command.message(niceName + currentDeal.name + ' cancelled negotiation')
-					if(mod.settings.log) console.log(now() + ' [Nego] ' + currentDeal.name + ' cancelled negotiation')
+					mod.command.message(niceName + currentDeal.name + ' negociacion cancelada')
+					if(mod.settings.log) console.log(now() + ' [Nego] ' + currentDeal.name + ' negociacion cancelada')
 					return false
 				}
 				else if(msg.id === 'SMT_MEDIATE_SUCCESS_SELL') {
-					mod.command.message(niceName + 'Negotiation with ' + currentDeal.name + ' successful')
-					if(mod.settings.log) console.log(now() + ' [Nego] Negotiation with ' + currentDeal.name + ' successful')
+					mod.command.message(niceName + 'Negociacion con ' + currentDeal.name + ' exitosa')
+					if(mod.settings.log) console.log(now() + ' [Nego] Negociacion con ' + currentDeal.name + ' exitosa')
 					return false
 				}
 			}
@@ -136,7 +136,7 @@ module.exports = function Negotiator(mod) {
 
 				if(deal) {
 					currentDeal = deal
-					mod.command.message(niceName + 'Handling negotiation with ' + currentDeal.name + '...')
+					mod.command.message(niceName + 'Manejo de negociaciones con ' + currentDeal.name + '...')
 					process.nextTick(() => {
 						mod.toClient('S_REPLY_REQUEST_CONTRACT', 1, { type: event.type })
 					})
@@ -173,10 +173,10 @@ module.exports = function Negotiator(mod) {
 		if(!(currentDeal = pendingDeals.shift())) return
 
 		if(comparePrice(currentDeal.offeredPrice, currentDeal.sellerPrice) == 1) {
-			mod.command.message(niceName + 'Attempting to negotiate with ' + currentDeal.name + ' for ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')...')
-			mod.command.message(niceName + 'Price: ' + formatGold(currentDeal.sellerPrice) + ' - Offered: ' + formatGold(currentDeal.offeredPrice))
-			if(mod.settings.log) console.log(now() + ' [Nego] Attempting to negotiate with ' + currentDeal.name + ' for ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')...\n'
-				+ '             Price: ' + formatGoldConsole(currentDeal.sellerPrice) + ' - Offered: ' + formatGoldConsole(currentDeal.offeredPrice))
+			mod.command.message(niceName + 'Intentando negociar con ' + currentDeal.name + ' por ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')...')
+			mod.command.message(niceName + 'Precio: ' + formatGold(currentDeal.sellerPrice) + ' - Ofrecido: ' + formatGold(currentDeal.offeredPrice))
+			if(mod.settings.log) console.log(now() + ' [Nego] Intentando negociar con ' + currentDeal.name + ' por ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')...\n'
+				+ '             Precio: ' + formatGoldConsole(currentDeal.sellerPrice) + ' - Ofrecido: ' + formatGoldConsole(currentDeal.offeredPrice))
 
 			const data = Buffer.alloc(30)
 			data.writeUInt32LE(currentDeal.playerId, 0)
@@ -197,10 +197,10 @@ module.exports = function Negotiator(mod) {
 				listing: currentDeal.listing
 			})
 
-			mod.command.message(niceName + 'Declined negotiation from ' + currentDeal.name + ' for ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')')
-			mod.command.message(niceName + 'Price: ' + formatGold(currentDeal.sellerPrice) + ' - Offered: ' + formatGold(currentDeal.offeredPrice))
-			if(mod.settings.log) console.log(now() + ' [Nego] Declined negotiation from ' + currentDeal.name + ' for ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')\n'
-				+ '             Price: ' + formatGoldConsole(currentDeal.sellerPrice) + ' - Offered: ' + formatGoldConsole(currentDeal.offeredPrice))
+			mod.command.message(niceName + 'Negociacion rechazada de ' + currentDeal.name + ' por ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')')
+			mod.command.message(niceName + 'Precio: ' + formatGold(currentDeal.sellerPrice) + ' - Ofrecido: ' + formatGold(currentDeal.offeredPrice))
+			if(mod.settings.log) console.log(now() + ' [Nego] Negociacion rechazada de ' + currentDeal.name + ' por ' + conv(currentDeal.item) + '(' + currentDeal.amount + ')\n'
+				+ '             Precio: ' + formatGoldConsole(currentDeal.sellerPrice) + ' - Ofrecido: ' + formatGoldConsole(currentDeal.offeredPrice))
 
 			currentDeal = null
 			queueNextDeal()
@@ -216,8 +216,8 @@ module.exports = function Negotiator(mod) {
 		clearTimeout(cancelTimeout)
 
 		if(currentContract) {
-			mod.command.message(niceName + 'Negotiation timed out')
-			if(mod.settings.log) console.log(now() + ' [Nego] Negotiation timed out')
+			mod.command.message(niceName + 'Se agoto el tiempo de espera de la negociacion')
+			if(mod.settings.log) console.log(now() + ' [Nego] Se agoto el tiempo de espera de la negociacion')
 
 			mod.toServer('C_CANCEL_CONTRACT', 1, {
 				type: currentContract.type,
@@ -276,40 +276,40 @@ module.exports = function Negotiator(mod) {
 			case "accept":
 				if(value) {
 					mod.settings.AUTO_ACCEPT_THRESHOLD = Number(value)
-					mod.command.message(niceName + 'Auto accept threshold set to <font color="#F0E442">' + mod.settings.AUTO_ACCEPT_THRESHOLD + '</font>')
-					console.log('[Nego] Auto accept threshold set to ' + mod.settings.AUTO_ACCEPT_THRESHOLD)
+					mod.command.message(niceName + 'Auto aceptar el limite establecido en <font color="#F0E442">' + mod.settings.AUTO_ACCEPT_THRESHOLD + '</font>')
+					console.log('[Nego] Auto aceptar el limite establecido en ' + mod.settings.AUTO_ACCEPT_THRESHOLD)
 				}
 				break
 			case "decline":
 			case "reject":
 				if(value) {
 					mod.settings.AUTO_REJECT_THRESHOLD = Number(value)
-					mod.command.message(niceName + 'Auto reject threshold set to <font color="#F0E442">' + mod.settings.AUTO_REJECT_THRESHOLD + '</font>')
-					console.log('[Nego] Auto reject threshold set to ' + mod.settings.AUTO_REJECT_THRESHOLD)
+					mod.command.message(niceName + 'Auto rechazar el limite establecido en <font color="#F0E442">' + mod.settings.AUTO_REJECT_THRESHOLD + '</font>')
+					console.log('[Nego] Auto rechazar el limite establecido en  ' + mod.settings.AUTO_REJECT_THRESHOLD)
 				}
 				break
 			case "unattended":
 				mod.settings.UNATTENDED_MANUAL_NEGOTIATE = !mod.settings.UNATTENDED_MANUAL_NEGOTIATE
-				mod.command.message(niceName + 'Unattended manual negotiation ' + (mod.settings.UNATTENDED_MANUAL_NEGOTIATE ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-				console.log('[Nego] Unattended manual negotiation ' + (mod.settings.UNATTENDED_MANUAL_NEGOTIATE ? 'enabled' : 'disabled'))
+				mod.command.message(niceName + 'Negociacion manual desatendida ' + (mod.settings.UNATTENDED_MANUAL_NEGOTIATE ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+				console.log('[Nego] Negociacion manual desatendida ' + (mod.settings.UNATTENDED_MANUAL_NEGOTIATE ? 'enabled' : 'disabled'))
 				break
 			case "delay":
 				mod.settings.DELAY_ACTIONS = !mod.settings.DELAY_ACTIONS
-				mod.command.message(niceName + 'Human-like behavior ' + (mod.settings.DELAY_ACTIONS ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-				console.log('[Nego] Human-like behavior ' + (mod.settings.DELAY_ACTIONS ? 'enabled' : 'disabled'))
+				mod.command.message(niceName + 'Comportamiento similar al humano ' + (mod.settings.DELAY_ACTIONS ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+				console.log('[Nego] Comportamiento similar al humano ' + (mod.settings.DELAY_ACTIONS ? 'enabled' : 'disabled'))
 				break
 			case "log":
 				mod.settings.log = !mod.settings.log
-				mod.command.message(niceName + 'Logging to console ' + (mod.settings.log ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
-				console.log('[Nego] Logging to console ' + (mod.settings.log ? 'enabled' : 'disabled'))
+				mod.command.message(niceName + 'Iniciar sesion en la consola ' + (mod.settings.log ? '<font color="#56B4E9">enabled</font>' : '<font color="#E69F00">disabled</font>'))
+				console.log('[Nego] Iniciar sesion en la consola ' + (mod.settings.log ? 'enabled' : 'disabled'))
 				break
 			default:
 				mod.command.message('Commands:\n' 
-					+ ' "nego accept [x]" (change the minimum percentage to accept a deal, e.g. "nego accept 100" [0 to disable])\n'
-					+ ' "nego reject [x]" (change the maximum percentage to reject a deal, e.g. "nego reject 75" [0 to disable])\n'
-					+ ' "nego unattended" (enable/disable automatically accepting deals after clicking the "Accept" link in chat)\n'
-					+ ' "nego delay" (switch between human-like behavior and immediate negotiation)\n'
-					+ ' "nego log" (enable/disable logging to console)'
+					+ ' "nego accept [x]" (cambiar el porcentaje minimo para aceptar un trato, ej. "nego accept 100" [0 para inhabilitar])\n'
+					+ ' "nego reject [x]" (cambiar el porcentaje maximo para rechazar un trato, ej. "nego reject 75" [0 para inhabilitar])\n'
+					+ ' "nego unattended" ( habilitar / deshabilitar la aceptacion automatica de ofertas despues de hacer clic en el enlace "Accept" en el chat)\n'
+					+ ' "nego delay" (cambiar entre el comportamiento humano y la negociacion inmediata)\n'
+					+ ' "nego log" (habilitar / deshabilitar el registro en la consola)'
 				)
 		}
 	})
