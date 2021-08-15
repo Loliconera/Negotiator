@@ -10,7 +10,7 @@ Debería funcionar en todas las regiones siempre que se asignen los códigos de 
 Un módulo tera-proxy que acepta o rechaza automáticamente las negociaciones de Trade Broker.
 Esta es una bifurcación del original Pinkie Pie's auto-negotiate.
 
-![Screenshot](https://i.imgur.com/uB74X4o.png)
+![Screenshot](https://i.imgur.com/Sg4zWBo.png)
 
 ## Como usar
 Hay varias opciones que puede cambiar en el archivo config.json:  
