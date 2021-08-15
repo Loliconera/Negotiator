@@ -1,7 +1,7 @@
 {
     "disableAutoUpdate": false,
     "name": "Negotiator",
-    "author": "TeraProxy / Pinkie Pie",
+    "author": "TeraProxy / Pinkie Pie / Loliconera",
     "description": "Acepta o rechaza automáticamente las negociaciones Trade Broker.",
     "version": "1.1.0",
     "options": {
@@ -11,7 +11,7 @@
         "settingsFile": "config.json",
         "settingsMigrator": "settings_migrator.js"
     },
-    "servers": ["https://raw.githubusercontent.com/Loliconera/Negotiator/master/"],
-    "supportUrl": "https://github.com/Loliconera/Negotiator/issues",
+    "servers": ["https://raw.githubusercontent.com/Loliconera/Negotiator-Spanish/master/"],
+    "supportUrl": "https://github.com/Loliconera/Negotiator-Spanish/issues",
     "conflicts": ["auto-negotiate","auto-negotiate-master","auto-nego"]
 }
