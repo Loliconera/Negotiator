@@ -71,7 +71,7 @@ module.exports = function Negotiator(mod) {
 		}
 	})
 
-	mod.hook('S_REQUEST_CONTRACT', 2, event => {
+	mod.hook('S_REQUEST_CONTRACT', 1, event => {
 		if(currentDeal && (event.type == TYPE_NEGOTIATION_PENDING || event.type == TYPE_NEGOTIATION)) {
 			currentContract = event
 			setEndTimeout()
