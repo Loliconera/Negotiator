@@ -1,7 +1,7 @@
 {
     "disableAutoUpdate": false,
     "name": "Negotiator",
-    "author": "TeraProxy / Pinkie Pie / Loliconera",
+    "author": "Loliconera",
     "description": "Acepta o rechaza automáticamente las negociaciones Trade Broker.",
     "version": "1.1.0",
     "options": {
